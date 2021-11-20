@@ -27,16 +27,6 @@ def record_audio(ask = False):
         return voice_data
 
 
-def speaking(audio_string):
-    tts = gTTS(text=audio_string, lang="tr") # text to speech 
-    rand = random.randint(1,100000) # ses dosyasının ismi için
-    filename = "audio-" + str(rand) + ".mp3" # ses dosyasının ismi için
-    tts.save(filename)
-    playsound.playsound(filename)
-    print(audio_string)
-    os.remove(filename) # ses dosyasını daha sonra karışmasın diye siliyor
-
-
 def respond(voice_data): # kullanıcıya yanıt
     if "nasılsın" in voice_data:
         speaking("İyiyim, Sen Nasılsın?")
@@ -53,10 +43,21 @@ def respond(voice_data): # kullanıcıya yanıt
         speaking("Görüşürüz")
         exit()
 
+def speaking(audio_string):
+    tts = gTTS(audio_string, lang="tr") # text to speech 
+    rand = random.randint(1,10000) # ses dosyasının ismi için
+    file = "audio-"+str(rand)+".mp3" # ses dosyasının ismi için
+    tts.save(file)
+    playsound.playsound(file)
+    os.remove(file) # ses dosyasını daha sonra karışmasın diye siliyor
+
+
+
+speaking("sana nasıl yardımcı olabilirim")
 time.sleep(1)
-speaking("Sana Nasıl Yardımcı Olabilirim?")
 while 1:  
     voice_data = record_audio() 
+    print(voice_data)
     respond(voice_data)
 
 
