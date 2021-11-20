@@ -5,7 +5,7 @@ import time
 import os
 import random
 from gtts import gTTS
-import playsound
+from playsound import playsound
 
 
 r = sr.Recognizer() # ses algılayıcı tanımlandı 
@@ -32,14 +32,14 @@ def respond(voice_data): # kullanıcıya yanıt
         speaking("İyiyim, Sen Nasılsın?")
     if "nasıl gidiyor" in voice_data:
         speaking("İyi gidiyor")
-    if "saat kaç" or "saati söyler misin" in voice_data:
+    if "saat kaç" in voice_data:
         speaking(datetime.now().strftime("%H:%M:%S"))
-    if "arama yapmak istiyorum" or "arama" or "arama yap" in voice_data:
+    if "arama yap" in voice_data:
         search = record_audio("Ne Aramak İstiyorsun?")
         url = "https://google.com/search?q=" + search
         webbrowser.get().open(url)
         speaking(f"{search} Araması Sonucunda Bunları Buldum")
-    if "görüşürüz" or "kapat" or "bay" in voice_data:
+    if "görüşürüz" in voice_data:
         speaking("Görüşürüz")
         exit()
 
@@ -48,7 +48,7 @@ def speaking(audio_string):
     rand = random.randint(1,10000) # ses dosyasının ismi için
     file = "audio-"+str(rand)+".mp3" # ses dosyasının ismi için
     tts.save(file)
-    playsound.playsound(file)
+    playsound(file)
     os.remove(file) # ses dosyasını daha sonra karışmasın diye siliyor
 
 
